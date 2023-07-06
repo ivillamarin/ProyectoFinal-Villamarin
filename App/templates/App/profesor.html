@@ -1,0 +1,19 @@
+<div>
+    {% extends "App/inicio.html" %}
+    {% load static %}
+    
+        {% block contenidoQueCambia %}
+        <div class="titulo">
+            <h2> Profesores</h2>
+        </div>
+        <div class="info">
+            <p>info: Tenemos una cantidad de 10 profesores repartidos en 5 materias</p>
+            <p>Puede buscar un profesor haciendo click en Buscar profesor</p>
+            <a href="/App/getProfesores">Buscar profesor</a>
+        </div>
+        <div class="formgetProfesores">
+            {% block getProfesores %}
+            {% endblock %}
+        </div>
+        {% endblock %}
+</div>

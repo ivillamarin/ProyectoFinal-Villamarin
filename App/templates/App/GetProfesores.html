@@ -1,0 +1,21 @@
+<div>
+    {% extends "App/profesor.html"%}
+    {% load static %}
+
+    {% block getProfesores %}
+    <div class="info"> 
+    <h3>Buscar profesor:</h3>
+    <form action="{% url 'buscarProfesor' %}" method="GET">
+        <input placeholder="profesor/a" type="text" name="nombre" id="nombre">
+        <input type="submit" value="buscar">
+    </form>
+    {% if profesores %}
+        {% for profesor in profesores %}
+            <li>{{profesor.nombre}}</li>
+            <li>{{profesor.apellido}}</li>
+            <li>{{profesor.email}}</li>
+        {% endfor%}
+    {%endif%}  
+    </div> 
+    {% endblock %}
+</div>

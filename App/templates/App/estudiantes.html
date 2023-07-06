@@ -1,0 +1,19 @@
+<div>
+    {% extends "App/inicio.html" %}
+    {% load static %}
+    
+        {% block contenidoQueCambia %}
+        <div class="titulo">
+            <h2>Estudiantes</h2>
+        </div>
+        <div class="info">
+            <p>info: Admicion abierta para cualquier persona</p>
+            <p> Puede inscribir al aestudiante haciendo click en Inscribir estudiante </p> 
+            <a href="/App/setEstudiante">Inscribir estudiante</a>
+        </div>
+        <div>
+            {% block setEstudiante %}
+            {% endblock %}
+        </div>
+        {% endblock %}
+</div>
