@@ -4,16 +4,33 @@
     
         {% block contenidoQueCambia %}
         <div class="titulo">
-            <h2>Estudiantes</h2>
+            <h1 style="padding: 150px" >Estudiantes</h1>
         </div>
-        <div class="info">
-            <p>info: Admicion abierta para cualquier persona</p>
-            <p> Puede inscribir al aestudiante haciendo click en Inscribir estudiante </p> 
-            <a href="/App/setEstudiante">Inscribir estudiante</a>
+        <div style="margin: 30px;" style="padding: 30px;" class="info">
+            <h3><p>info: Admicion abierta para cualquier persona</p></h3> 
+            <h3> <p> Puede inscribir al estudiante haciendo click en Inscribir estudiante </p> </h3> 
+            <button id="bottone5"> <a style="color: white;" href="/App/setEstudiante">inscribir estudiante</a></button>  
         </div>
         <div>
             {% block setEstudiante %}
             {% endblock %}
+        </div>
+        <div style="margin: 30px;" style="padding: 30px;" >
+            <h3>Estudiantes:</h3>
+            <table>
+                <tr id="tablaEst">
+                    <th>nombre</th>
+                    <th>apellido</th>
+                    <th>email</th>
+                </tr>
+                    {% for estudiante in Estudiantes %}
+                    <tr>
+                        <td>{{estudiante.nombre}}</td>
+                        <td>{{estudiante.apellido}}</td>
+                        <td>{{estudiante.email}}</td>
+                    </tr>
+                    {% endfor %}
+            </table>
         </div>
         {% endblock %}
 </div>
