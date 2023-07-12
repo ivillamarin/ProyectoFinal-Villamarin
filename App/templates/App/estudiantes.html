@@ -17,17 +17,19 @@
         </div>
         <div style="margin: 30px;" style="padding: 30px;" >
             <h3>Estudiantes:</h3>
-            <table>
+            <table id="tablaComp">
                 <tr id="tablaEst">
                     <th>nombre</th>
                     <th>apellido</th>
                     <th>email</th>
+                    <th>eliminar</th>
                 </tr>
                     {% for estudiante in Estudiantes %}
                     <tr>
                         <td>{{estudiante.nombre}}</td>
                         <td>{{estudiante.apellido}}</td>
                         <td>{{estudiante.email}}</td>
+                        <td><button class="btn btn-danger"><a href="{% url 'eliminarEstudiante' estudiante.nombre %}">X</a></button></td>
                     </tr>
                     {% endfor %}
             </table>

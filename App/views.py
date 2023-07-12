@@ -46,6 +46,14 @@ def loginWeb(request):
             return render(request, 'App/login.html', {'error' : 'usuario o contraseña incorrecto'})
     else:
         return render(request, 'App/login.html')
+    
+
+def eliminarEstudiante(request, nombre_estudiante):
+    estudiante = Estudiante.objects.get(nombre = nombre_estudiante)
+    estudiante.delete()
+    return render(request, "App/estudiantes.html", {"estudiante": estudiante})
+
+
 
 
 

@@ -162,12 +162,13 @@
 }
 
 #tablaEst{
-    background-color: #252525;
+    background-color: #080808;
     color: white;
     border-radius: 3px;
+    padding-right: 120px;
 
 }
 
 #tablaEst th{
-    padding: 10px;
+    padding: 100px;
 }
