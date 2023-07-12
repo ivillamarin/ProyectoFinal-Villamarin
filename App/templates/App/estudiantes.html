@@ -6,33 +6,40 @@
         <div class="titulo">
             <h1 style="padding: 150px" >Estudiantes</h1>
         </div>
-        <div style="margin: 30px;" style="padding: 30px;" class="info">
-            <h3><p>info: Admicion abierta para cualquier persona</p></h3> 
-            <h3> <p> Puede inscribir al estudiante haciendo click en Inscribir estudiante </p> </h3> 
-            <button id="bottone5"> <a style="color: white;" href="/App/setEstudiante">inscribir estudiante</a></button>  
+        <div style="margin: 30px;" style="padding: 40px;" class="info">
+            <br>
+            <h3><p style="color: darkgray;">info: Admicion abierta para cualquier persona</p></h3> 
+            <h3> <p style="color: darkgray;" > Puede inscribir al estudiante haciendo click en Inscribir estudiante </p> </h3> 
+            <button id="bottone5"> <a style="color: white;" href="/App/setEstudiante">inscribir estudiante</a></button>
+            <br>  
         </div>
         <div>
             {% block setEstudiante %}
             {% endblock %}
         </div>
-        <div style="margin: 30px;" style="padding: 30px;" >
-            <h3>Estudiantes:</h3>
-            <table id="tablaComp">
+        <div class="info" style="margin: 30px;" style="padding: 30px;" >
+            <br>
+            <h3 style="color: darkgrey;" style="margin: 20px;" >Estudiantes:</h3>
+            <table style="color: darkgrey;" id="tablaComp">
                 <tr id="tablaEst">
                     <th>nombre</th>
                     <th>apellido</th>
                     <th>email</th>
                     <th>eliminar</th>
+                    <th>editar</th>
                 </tr>
                     {% for estudiante in Estudiantes %}
                     <tr>
                         <td>{{estudiante.nombre}}</td>
                         <td>{{estudiante.apellido}}</td>
                         <td>{{estudiante.email}}</td>
-                        <td><button class="btn btn-danger"><a href="{% url 'eliminarEstudiante' estudiante.nombre %}">X</a></button></td>
+                        <td><button class="btn btn-danger btnEliminar"><a href="{% url 'eliminarEstudiante' estudiante.nombre %}">X</a></button></td>
+                        <td><button class="btn btn-warning btnEditar"><a href="{% url 'editarEstudiante' estudiante.nombre %}">!</a></button></td>
                     </tr>
                     {% endfor %}
             </table>
+            <br>
         </div>
+
         {% endblock %}
 </div>

@@ -4,6 +4,7 @@ from django.shortcuts import render
 from App.models import *
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import login, logout, authenticate
+from App.forms import formSetEstudiante
 
 
 def inicio(request):
@@ -22,10 +23,24 @@ def estudiantes(request):
 def setEstudiante(request):
     Estudiantes = Estudiante.objects.all()
     if request.method == 'POST':
+
+        miFormulario = formSetEstudiante(request.POST)
+        print(miFormulario)
+        if miFormulario.is_valid:
+            data = miFormulario.cleaned_data
+            estudiante = Estudiante(nombre=data["nombre"],apellido=data["apellido"],email=data["email"])
+            estudiante.save()
+            miFormulario = formSetEstudiante()
+            return render(request, "App/setEstudiantes.html", {"miFormulario":miFormulario, "Estudiantes":Estudiantes})
+    else:
+        miFormulario = formSetEstudiante()
+    return render(request, "App/setEstudiantes.html", {"miFormulario":miFormulario, "Estudiantes":Estudiantes})
+
+    """if request.method == 'POST':
         estudiante = Estudiante(nombre=request.POST["nombre"],apellido=request.POST["apellido"],email=request.POST["email"])
         estudiante.save()
         return render(request,"App/setEstudiantes.html",{"Estudiantes": Estudiantes})
-    return render(request, "App/setEstudiantes.html", {"Estudiantes": Estudiantes})
+    return render(request, "App/setEstudiantes.html", {"Estudiantes": Estudiantes})"""
 
 def getProfesores(request):
     return render(request, "App/GetProfesores.html")
@@ -34,7 +49,7 @@ def buscarProfesor(request):
     nombre = request.GET["nombre"]
     if nombre:
         profesores = Profesor.objects.filter(nombre = nombre)
-    return render(request, "App/GetProfesores.html", {"profesores" : profesores})    
+    return render(request, "App/GetProfesores.html", {"profesores" : profesores, "key": "value"})    
 
 def loginWeb(request):
     if request.method == "POST":
@@ -51,7 +66,31 @@ def loginWeb(request):
 def eliminarEstudiante(request, nombre_estudiante):
     estudiante = Estudiante.objects.get(nombre = nombre_estudiante)
     estudiante.delete()
-    return render(request, "App/estudiantes.html", {"estudiante": estudiante})
+    miFormulario = formSetEstudiante()
+    Estudiantes = Estudiante.objects.all()
+    return render(request, "App/setEstudiantes.html", {"miFormulario":miFormulario, "Estudiantes":Estudiantes})
+
+def editarEstudiante(request, nombre_estudiante):
+    estudiante = Estudiante.objects.get(nombre= nombre_estudiante)
+
+    if request.method == 'POST':
+        miFormulario = formSetEstudiante(request.POST)
+        if miFormulario.is_valid:
+            data = miFormulario.cleaned_data
+
+            estudiante.nombre = data['nombre']
+            estudiante.apellido = data['apellido']
+            estudiante.email = data['email']
+            estudiante.save()
+            miFormulario = formSetEstudiante()
+            Estudiantes = Estudiante.objects.all()
+            return render(request, "App/setEstudiantes.html", {"miFormulario":miFormulario, "Estudiantes":Estudiantes})
+    else:
+        miFormulario = formSetEstudiante(initial={'nombre': estudiante.nombre, 'apellido': estudiante.apellido, 'email': estudiante.email})
+    return render(request, "App/editarEstudiante.html", {"miFormulario":miFormulario})
+
+
+
 
 
 

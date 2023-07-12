@@ -3,13 +3,20 @@
     {% load static %}
 
     {% block setEstudiante %}
-    <div style="margin: 30px;" style="padding: 30px;" class="info"> 
-    <h2 style="margin: 10px;">Inscribir Estudiante: </h2>
+    <div style="margin: 30px;" style="padding: 30px;"> 
+        <br>
+    <h2 style="color: rgb(34, 33, 33);" style="margin: 30px;">Inscribir Estudiante: </h2>
         <form action="/App/setEstudiante/"    method="POST"> {% csrf_token %}
-            <input style="margin: 10px;" placeholder="Nombre" type = "text" name="nombre" required>
+            <!--input style="margin: 10px;" placeholder="Nombre" type = "text" name="nombre" required>
             <input style="margin: 10px;" placeholder="Apellido" type = "text" name="apellido" required>
-            <input style="margin: 10px;" placeholder="Email" type = "email" name="email" >
+            <input style="margin: 10px;" placeholder="Email" type = "email" name="email"-->
+            <table>
+                {{ miFormulario.as_table }}
+            </table>
             <input style="color: white;" id="bottone5" type = "submit" value="Enviar">
+            
+            <br>
+            <br>
         </form>
     </div>
     {% endblock %}
