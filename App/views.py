@@ -57,7 +57,7 @@ def buscarProfesor(request):
 
 def loginWeb(request):
     if request.method == "POST":
-        user = authenticate (username = request.POST['user'], password = request.POST['password'])
+        user = authenticate (username = request.POST['username'], password = request.POST['password'])
         if user is not None:
             login(request, user)
             return render(request, 'App/inicio.html')
