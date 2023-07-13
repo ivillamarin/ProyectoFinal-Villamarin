@@ -5,6 +5,7 @@ from App.models import *
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import login, logout, authenticate
 from App.forms import formSetEstudiante
+from django.contrib.auth.decorators import login_required
 
 
 def inicio(request):
@@ -13,13 +14,16 @@ def inicio(request):
 def curso(request):
     return render(request, "App/curso.html")
 
+@login_required
 def profesores(request):
     return render(request, "App/profesor.html")
 
+@login_required
 def estudiantes(request):
     Estudiantes = Estudiante.objects.all()
     return render(request, "App/estudiantes.html", {"Estudiantes":Estudiantes})
 
+@login_required
 def setEstudiante(request):
     Estudiantes = Estudiante.objects.all()
     if request.method == 'POST':
@@ -94,9 +98,9 @@ def registro(request):
         userCreate = UserCreationForm(request.POST)
         if userCreate is not None:
             userCreate.save()
-            return render (request, "App/login.html")
+            return render (request, 'App/login.html')
     else:
-        return render(request, "App/registro.html")
+        return render(request, 'App/registro.html')
 
 
 
