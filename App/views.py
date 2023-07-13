@@ -89,6 +89,15 @@ def editarEstudiante(request, nombre_estudiante):
         miFormulario = formSetEstudiante(initial={'nombre': estudiante.nombre, 'apellido': estudiante.apellido, 'email': estudiante.email})
     return render(request, "App/editarEstudiante.html", {"miFormulario":miFormulario})
 
+def registro(request):
+    if request.method == 'POST':
+        userCreate = UserCreationForm(request.POST)
+        if userCreate is not None:
+            userCreate.save()
+            return render (request, "App/login.html")
+    else:
+        return render(request, "App/registro.html")
+
 
 
 

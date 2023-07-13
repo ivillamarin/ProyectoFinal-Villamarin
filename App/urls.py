@@ -12,4 +12,5 @@ urlpatterns = [
     path('login/', loginWeb, name="login"),
     path('eliminarEstudiante/<nombre_estudiante>', eliminarEstudiante, name="eliminarEstudiante"),
     path('editarEstudiante/<nombre_estudiante>', editarEstudiante, name="editarEstudiante"),
+    path('registro/', registro, name="registro"),
 ]
