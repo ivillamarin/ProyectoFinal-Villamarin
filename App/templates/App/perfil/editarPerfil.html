@@ -1,2 +1,11 @@
 <h2>Ediar perfil</h2>
-<h4></h4>
+<h4>{{user.username}}</h4>
+
+<form method="POST"> {% csrf_token %}
+    <table>
+        {{ form.as_table }}
+    </table>
+    <input type="submit" value="editar perfil"> 
+</form>
+
+<a href="/App/perfil/changePassword"> cambiar contraseña </a>

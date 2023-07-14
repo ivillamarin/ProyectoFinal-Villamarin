@@ -4,10 +4,12 @@ from django.shortcuts import render
 from App.models import *
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import login, logout, authenticate, login as django_login
-from App.forms import formSetEstudiante, LoginForm
+from App.forms import formSetEstudiante, LoginForm, UserEditForm
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.contrib.auth.views import LogoutView
+from django.contrib.auth.models import User
+
 
 
 
@@ -130,9 +132,26 @@ class CustomLogoutView(LogoutView):
         context['form'] = LoginForm()
         return context
 
-
-
 @login_required
 def perfilView(request):
     return render(request, 'App/perfil/perfil.html')
+
+@login_required
+def editarPerfil(request):
+    usuario = request.user 
+    user_basic_info = User.objects.get(id = usuario.id)
+    if request.method == "POST":
+        form = UserEditForm(request.POST, instance = usuario)
+        if form.is_valid():
+            user_basic_info.username = form.cleaned_data.get('username')
+            user_basic_info.email = form.cleaned_data.get('email')
+            user_basic_info.first_name = form.cleaned_data.get('first_name')
+            user_basic_info.last_name = form.cleaned_data.get('last_name')
+            user_basic_info.password = form.cleaned_data.get('password')
+            user_basic_info.save()
+            return render(request, 'App/perfil/perfil.html')
+    else:
+        form = UserEditForm(initial = {'username' : usuario.username, 'email' : usuario.email, 'first_name' : usuario.first_name, 'last_name' : usuario.last_name })
+        return render(request, 'App/perfil/editarPerfil.html', {"form": form})
+
     
