@@ -6,6 +6,8 @@ from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import login, logout, authenticate
 from App.forms import formSetEstudiante
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect
+
 
 
 def inicio(request):
@@ -57,14 +59,17 @@ def buscarProfesor(request):
 
 def loginWeb(request):
     if request.method == "POST":
-        user = authenticate (username = request.POST['user'], password = request.POST['password'])
+        username = request.POST['user']
+        password = request.POST['password']
+        user = authenticate(username=username, password=password)
         if user is not None:
             login(request, user)
-            return render(request, 'App/inicio.html')
+            return redirect('inicio')
         else:
-            return render(request, 'App/login.html', {'error' : 'usuario o contraseña incorrecto'})
+            return render(request, 'App/login.html', {'error': 'Usuario o contraseña incorrectos'})
     else:
         return render(request, 'App/login.html')
+
     
 
 def eliminarEstudiante(request, nombre_estudiante):
@@ -96,11 +101,13 @@ def editarEstudiante(request, nombre_estudiante):
 def registro(request):
     if request.method == 'POST':
         userCreate = UserCreationForm(request.POST)
-        if userCreate is not None:
-            userCreate.save()
-            return render (request, 'App/login.html')
+        if userCreate.is_valid():
+            user = userCreate.save()
+            login(request, user)
+            return redirect('inicio')
     else:
-        return render(request, 'App/registro.html')
+        userCreate = UserCreationForm()
+    return render(request, 'App/registro.html', {'form': userCreate})
 
 
 

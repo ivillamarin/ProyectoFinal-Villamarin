@@ -32,6 +32,8 @@
 .info {
     background-color: rgb(45, 45, 56) ;
     margin-left: 30px;
+    border-radius: 5px;
+    
 }
 
 .form {
@@ -188,6 +190,12 @@
     box-shadow: rgba(0, 0, 0, 0.06) 0 2px 4px;
     color: rgba(0, 0, 0, 0.65);
     transform: translateY(0);
+}
+
+.infoInicio{
+    margin-left: 30px;
+    background-color: rgb(45, 45, 56);
+    border-radius: 5px;
 }
 
 

@@ -12,7 +12,7 @@
 </head>
 
 <body>
-    <form action="" method="post"  class="form"> {% csrf_token %}
+    <form action="{% url 'login'%}" method="post"  class="form"> {% csrf_token %}
         <p id="heading">REGISTRO</p>
         <div class="field">
         <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
