@@ -3,10 +3,12 @@ from django.template import loader
 from django.shortcuts import render
 from App.models import *
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
-from django.contrib.auth import login, logout, authenticate
-from App.forms import formSetEstudiante
+from django.contrib.auth import login, logout, authenticate, login as django_login
+from App.forms import formSetEstudiante, LoginForm
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
+from django.contrib.auth.views import LogoutView
+
 
 
 
@@ -58,33 +60,44 @@ def buscarProfesor(request):
     return render(request, "App/GetProfesores.html", {"profesores" : profesores, "key": "value"})    
 
 def loginWeb(request):
+    error = None 
+    
     if request.method == "POST":
-        username = request.POST['user']
-        password = request.POST['password']
-        user = authenticate(username=username, password=password)
-        if user is not None:
-            login(request, user)
-            return redirect('inicio')
-        else:
-            return render(request, 'App/login.html', {'error': 'Usuario o contraseña incorrectos'})
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['user']
+            password = form.cleaned_data['password']
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect('inicio')
+            else:
+                error = 'Usuario o contraseña incorrectos'
+    
     else:
-        return render(request, 'App/login.html')
+        form = LoginForm()
+    
+    return render(request, 'App/login.html', {'form': form, 'error': error})
 
+        
+    
+    form = AuthenticationForm()
+    return render(request, 'App/login.html', {'form': form})
     
 
 def eliminarEstudiante(request, nombre_estudiante):
-    estudiante = Estudiante.objects.get(nombre = nombre_estudiante)
+    estudiante = Estudiante.objects.get(nombre=nombre_estudiante)
     estudiante.delete()
     miFormulario = formSetEstudiante()
     Estudiantes = Estudiante.objects.all()
-    return render(request, "App/setEstudiantes.html", {"miFormulario":miFormulario, "Estudiantes":Estudiantes})
+    return render(request, "App/setEstudiantes.html", {"miFormulario": miFormulario, "Estudiantes": Estudiantes})
 
 def editarEstudiante(request, nombre_estudiante):
-    estudiante = Estudiante.objects.get(nombre= nombre_estudiante)
+    estudiante = Estudiante.objects.get(nombre=nombre_estudiante)
 
     if request.method == 'POST':
         miFormulario = formSetEstudiante(request.POST)
-        if miFormulario.is_valid:
+        if miFormulario.is_valid():  # Se corrigió la validación del formulario
             data = miFormulario.cleaned_data
 
             estudiante.nombre = data['nombre']
@@ -93,10 +106,10 @@ def editarEstudiante(request, nombre_estudiante):
             estudiante.save()
             miFormulario = formSetEstudiante()
             Estudiantes = Estudiante.objects.all()
-            return render(request, "App/setEstudiantes.html", {"miFormulario":miFormulario, "Estudiantes":Estudiantes})
+            return render(request, "App/setEstudiantes.html", {"miFormulario": miFormulario, "Estudiantes": Estudiantes})
     else:
         miFormulario = formSetEstudiante(initial={'nombre': estudiante.nombre, 'apellido': estudiante.apellido, 'email': estudiante.email})
-    return render(request, "App/editarEstudiante.html", {"miFormulario":miFormulario})
+    return render(request, "App/editarEstudiante.html", {"miFormulario": miFormulario})
 
 def registro(request):
     if request.method == 'POST':
@@ -109,11 +122,17 @@ def registro(request):
         userCreate = UserCreationForm()
     return render(request, 'App/registro.html', {'form': userCreate})
 
+class CustomLogoutView(LogoutView):
+    template_name = 'App/login.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form'] = LoginForm()
+        return context
 
 
 
-
-
-
-
-
+@login_required
+def perfilView(request):
+    return render(request, 'App/perfil/perfil.html')
+    
