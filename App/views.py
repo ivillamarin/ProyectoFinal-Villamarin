@@ -3,8 +3,8 @@ from django.template import loader
 from django.shortcuts import render
 from App.models import *
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
-from django.contrib.auth import login, logout, authenticate, login as django_login
-from App.forms import formSetEstudiante, LoginForm, UserEditForm
+from django.contrib.auth import login, logout, authenticate, login as django_login, update_session_auth_hash
+from App.forms import formSetEstudiante, LoginForm, UserEditForm, changePasswordForm
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.contrib.auth.views import LogoutView
@@ -153,5 +153,26 @@ def editarPerfil(request):
     else:
         form = UserEditForm(initial = {'username' : usuario.username, 'email' : usuario.email, 'first_name' : usuario.first_name, 'last_name' : usuario.last_name })
         return render(request, 'App/perfil/editarPerfil.html', {"form": form})
+
+@login_required
+def changePassword(request):
+    usuario = request.user
+    if request.method == 'POST':
+        form = changePasswordForm(data = request.POST, user = usuario)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)
+        return render(request, "App/inicio.html")
+    else:
+        form = changePasswordForm(user = usuario)
+        return render ( request, 'App/perfil/changePassword.html', {"form": form} )
+    
+def editAvatar(request):
+    pass
+
+
+
+
+
 
     
