@@ -4,7 +4,7 @@ from django.shortcuts import render
 from App.models import *
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import login, logout, authenticate, login as django_login, update_session_auth_hash
-from App.forms import formSetEstudiante, LoginForm, UserEditForm, changePasswordForm
+from App.forms import formSetEstudiante, LoginForm, UserEditForm, changePasswordForm, AvatarForm
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.contrib.auth.views import LogoutView
@@ -15,7 +15,8 @@ from django.contrib.auth.models import User
 
 
 def inicio(request):
-    return render(request, "App/inicio.html")
+    avatar = getavatar(request)
+    return render(request, "App/inicio.html", {"avatar" : avatar})
 
 def curso(request):
     return render(request, "App/curso.html")
@@ -168,7 +169,36 @@ def changePassword(request):
         return render ( request, 'App/perfil/changePassword.html', {"form": form} )
     
 def editAvatar(request):
-    pass
+    if request.method == 'POST':
+        form = AvatarForm(request.POST, request.FILES)
+        print(form)
+        print(form.is_valid())
+        if form.is_valid():
+            user = User.objects.get(username = request.user)
+            avatar = Avatar(user = user, image = form.cleaned_data['avatar'], id = request.user.id)
+            avatar.save()
+            avatar = Avatar.objects.filter(user = request.user.id)
+            try:
+                avatar = avatar[0].image.url
+            except:
+                avatar = None
+            return render(request, "App/inicio.html", {'avatar' : avatar} )
+    else:
+        try:
+            avatar = Avatar.objects.filter(user = request.user.id)
+            form = AvatarForm()
+        except:
+            form = AvatarForm()
+    return render (request, "App/perfil/avatar.html", {'form': form})
+
+def getavatar(request):
+    avatar = Avatar.objects.filter(user = request.user.id)
+    try:
+        avatar = avatar[0].image.url
+    except:
+        avatar = None
+    return avatar
+
 
 
 
