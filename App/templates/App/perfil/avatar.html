@@ -2,14 +2,16 @@
 {% load static %}
 
 {% block contenidoQueCambia %}
-<h3>avatar</h3>
-<h5>{{user.username}}</h5>
+<div class="info" style="padding: 150px;" > 
+<h3 style="color: darkgrey;">Avatar</h3>
+<h5 style="color: darkgrey;">{{user.username}}</h5>
 
-<form method="POST" enctype="multipart/form-data"> {% csrf_token %}
+<form style="color: darkgrey;" method="POST" enctype="multipart/form-data"> {% csrf_token %}
     <table>
         {{ form.as_p }}
     </table>
-    <input type="submit" value="aceptar">
+    <input style="color: darkgrey;" id="bottone5" type="submit" value="aceptar">
 
 </form>
+</div>
 {% endblock %}

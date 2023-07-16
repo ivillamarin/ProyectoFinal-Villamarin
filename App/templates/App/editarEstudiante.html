@@ -1,14 +1,18 @@
-<div>   
+{% extends "App/inicio.html" %}
+
+{% block contenidoQueCambia %}
+<div class="info" style="padding: 150px;">   
     {% load static %}
 
     {% block setEstudiante %}
-    <form action=""    method="POST"> {% csrf_token %}
-        <h2>Ediar usuario: </h2>
-        <table>
+    <form  action=""    method="POST"> {% csrf_token %}
+        <h2 style="color: darkgrey;" >Ediar usuario: </h2>
+        <table style="color: darkgrey;">
             {{ miFormulario.as_table }}
         </table>
-        <input style="color: rgb(10, 10, 10);" id="bottone5" type = "submit" value="Enviar">
+        <input style="color: darkgrey" id="bottone5" type = "submit" value="Enviar">
     </form>
 </div>
 {% endblock %}
 </div>
+{% endblock %}

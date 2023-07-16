@@ -31,8 +31,9 @@
                     <li class="nav-item"><a class="nav-link navText" href="{% url 'profesores' %}">profesores</a></li>
                     <li class="nav-item"><a class="nav-link navText" href="{% url 'Logout' %}">logout</a></li>
                     <li class="nav-item"><a class="nav-link navText" href="{% url 'login' %}">login</a></li>
+                    <li class="nav-item"><a class="nav-link navText" href=""><img src="{{avatar}}" width="30px" alt="perfil"></a></li>
                     <li class="nav-item"><a class="nav-link navText" href="{% url 'perfil' %}">{{user.username}}</a></li>
-                    <li class="nav-item"><a class="nav-link navText" href=""><img src="{{avatar}}" width="40px" alt="perfil"></a></li>
+                    
                 </ul>
             </div>
         </div>

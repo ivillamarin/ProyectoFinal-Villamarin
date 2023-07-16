@@ -139,7 +139,7 @@ def perfilView(request):
 
 @login_required
 def editarPerfil(request):
-    usuario = request.user 
+    usuario = request.user
     user_basic_info = User.objects.get(id = usuario.id)
     if request.method == "POST":
         form = UserEditForm(request.POST, instance = usuario)
@@ -148,13 +148,12 @@ def editarPerfil(request):
             user_basic_info.email = form.cleaned_data.get('email')
             user_basic_info.first_name = form.cleaned_data.get('first_name')
             user_basic_info.last_name = form.cleaned_data.get('last_name')
-            user_basic_info.password = form.cleaned_data.get('password')
             user_basic_info.save()
             return render(request, 'App/perfil/perfil.html')
     else:
-        form = UserEditForm(initial = {'username' : usuario.username, 'email' : usuario.email, 'first_name' : usuario.first_name, 'last_name' : usuario.last_name })
+        form = UserEditForm(initial= {'username': usuario.username, 'email': usuario.email, 'first_name': usuario.first_name, 'last_name': usuario.last_name })
         return render(request, 'App/perfil/editarPerfil.html', {"form": form})
-
+    
 @login_required
 def changePassword(request):
     usuario = request.user
