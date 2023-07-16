@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserChangeForm, PasswordChangeForm
 from django.contrib.auth.models import User
 
+
 class formSetEstudiante(forms.Form):
     nombre = forms.CharField(max_length=30)
     apellido = forms.CharField(max_length=30)
@@ -12,7 +13,7 @@ class LoginForm(forms.Form):
     password = forms.CharField(widget=forms.PasswordInput)
 
 
-class UserEditForm():
+class UserEditForm(UserChangeForm):
     username = forms.CharField(widget= forms.TextInput(attrs={"placeholder":"Username"}))
     email = forms.CharField(widget= forms.TextInput(attrs={"placeholder":"Email"}))
     first_name = forms.CharField(widget= forms.TextInput(attrs={"placeholder":"First Name"}))
@@ -38,6 +39,9 @@ class changePasswordForm(PasswordChangeForm):
 
 class AvatarForm(forms.Form):
     avatar = forms.ImageField()
+
+
+
 
 
 

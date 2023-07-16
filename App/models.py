@@ -28,3 +28,4 @@ class Profesor(models.Model):
 class Avatar(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     image = models.ImageField(upload_to='avatares', null=True, blank=True)
+

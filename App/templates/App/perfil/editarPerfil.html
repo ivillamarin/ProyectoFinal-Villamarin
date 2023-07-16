@@ -1,6 +1,7 @@
 {% extends "../inicio.html" %}
 {% load static %}
 
+{% block contenidoQueCambia %}
 <h2>Ediar perfil</h2>
 <h4>{{user.username}}</h4>
 
@@ -12,3 +13,5 @@
 </form>
 
 <a href="/App/perfil/changePassword"> cambiar contraseña </a>
+
+{% endblock %}

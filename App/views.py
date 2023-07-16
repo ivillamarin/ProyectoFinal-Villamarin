@@ -14,6 +14,7 @@ from django.contrib.auth.models import User
 
 
 
+
 def inicio(request):
     avatar = getavatar(request)
     return render(request, "App/inicio.html", {"avatar" : avatar})
@@ -151,7 +152,7 @@ def editarPerfil(request):
             user_basic_info.save()
             return render(request, 'App/perfil/perfil.html')
     else:
-        form = UserEditForm(initial= {'username': usuario.username, 'email': usuario.email, 'first_name': usuario.first_name, 'last_name': usuario.last_name })
+        form = UserEditForm(initial = {'username': usuario.username, 'email': usuario.email, 'first_name': usuario.first_name, 'last_name': usuario.last_name })
         return render(request, 'App/perfil/editarPerfil.html', {"form": form})
     
 @login_required
@@ -197,6 +198,27 @@ def getavatar(request):
     except:
         avatar = None
     return avatar
+
+@login_required
+def comentarios(request):
+    if request.method == 'POST':
+        nuevo_comentario = request.POST.get('nuevo_comentario', '')
+        # Aquí puedes realizar cualquier lógica adicional, como guardar el comentario en la base de datos.
+
+        # Ejemplo: Guardar el comentario en una lista en memoria
+        comentarios_guardados = request.session.get('comentarios', [])
+        comentarios_guardados.append(nuevo_comentario)
+        request.session['comentarios'] = comentarios_guardados
+
+    comentarios = request.session.get('comentarios', [])  # Obtener los comentarios guardados
+
+    return render(request, 'App/comentarios.html', {'comentarios': comentarios})
+
+
+def acercaDeMi(request):
+    return render(request, 'App/acercaDeMi.html')
+
+
 
 
 

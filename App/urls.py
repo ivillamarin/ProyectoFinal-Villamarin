@@ -19,4 +19,6 @@ urlpatterns = [
     path('perfil/editarPerfil/', editarPerfil, name="editarPerfil"),
     path('perfil/changePassword/', changePassword, name="changePassword"),
     path('perfil/changeAvatar/', editAvatar, name="editAvatar"),
+    path('comentarios/', comentarios, name="comentarios"),
+    path('acercaDeMi/', acercaDeMi, name="acercaDeMi"),
 ]

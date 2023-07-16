@@ -33,6 +33,7 @@
                     <li class="nav-item"><a class="nav-link navText" href="{% url 'login' %}">login</a></li>
                     <li class="nav-item"><a class="nav-link navText" href=""><img src="{{avatar}}" width="30px" alt="perfil"></a></li>
                     <li class="nav-item"><a class="nav-link navText" href="{% url 'perfil' %}">{{user.username}}</a></li>
+                    <li class="nav-item"><a class="nav-link navText" href="{% url 'acercaDeMi' %}">acerca de mi</a></li>
                     
                 </ul>
             </div>
@@ -47,6 +48,9 @@
                 Pero sobre todo queremos ser parte de los más lindos recuerdos, una educación en familia es nuestra meta y camino. </h3>
                 <br>
             </p>
+
+            <h3> danos tu opinion </h3>
+            <a href="/comentarios/"> comentar </a>
     
         </div>
         {% endblock %}
