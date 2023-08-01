@@ -9,6 +9,9 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.contrib.auth.views import LogoutView
 from django.contrib.auth.models import User
+from django.shortcuts import render, redirect
+from .models import Comentario
+
 
 
 
@@ -219,6 +222,16 @@ def acercaDeMi(request):
     return render(request, 'App/acercaDeMi.html')
 
 
+@login_required
+def comentarios(request):
+    if request.method == 'POST':
+        nuevo_comentario = request.POST.get('nuevo_comentario', '')
+
+        comentario = Comentario(contenido=nuevo_comentario, autor=request.user)
+        comentario.save()
+        return redirect('comentarios')
+    comentarios = Comentario.objects.all()
+    return render(request, 'App/comentarios.html', {'comentarios': comentarios})
 
 
 
@@ -226,4 +239,9 @@ def acercaDeMi(request):
 
 
 
-    
+
+
+
+
+
+

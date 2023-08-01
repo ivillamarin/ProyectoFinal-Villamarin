@@ -29,3 +29,13 @@ class Avatar(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     image = models.ImageField(upload_to='avatares', null=True, blank=True)
 
+class Comentario(models.Model):
+    contenido = models.TextField()
+    fecha_creacion = models.DateTimeField(auto_now_add=True)
+    autor = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def _str_(self):
+        return f"Comentario por {self.autor.username} - {self.fecha_creacion}"
+
+
+
