@@ -2,13 +2,22 @@
 {% load static %}
 
 {% block contenidoQueCambia %}
-<div style="margin-left: 0px;" class="info"> 
-<h1>Foro de comentarios</h1>
-    <h2>Comentarios:</h2>
+<div class="titulo">
+    <h1 style="padding: 100px;" style="color: darkgrey;" >Foro de comentarios</h1>
+</div>
 
-    {% for comentario in comentarios %}
-        <p style="color: darkgrey;">{{ comentario }}</p>
+<div style="padding: 150px;" style="margin-left: 0px;" class="info"> 
+    
+    <h2 style="color: darkgrey;" >Comentarios:</h2>
+
+    <div style="background-color: white;">
+        {% for comentario in comentarios %}
+        <p style="color: rgb(15, 15, 15);">{{ comentario.contenido }}</p>
+        <p style="color: rgb(15, 15, 15);">Autor: {{ comentario.autor.username }}</p>
     {% endfor %}
+
+    </div>
+    
 
     <h2 style="color: darkgray;">Agregar un comentario:</h2>
     <form method="post" action="">
