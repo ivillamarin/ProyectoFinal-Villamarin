@@ -120,14 +120,18 @@ def editarEstudiante(request, nombre_estudiante):
 
 def registro(request):
     if request.method == 'POST':
-        userCreate = UserCreationForm(request.POST)
-        if userCreate.is_valid():
-            user = userCreate.save()
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password1')
+            user = User.objects.create_user(username=username, password=password)
+            user = authenticate(request, username=username, password=password)
             login(request, user)
-            return redirect('inicio')
+            return render(request, 'App/login.html')
     else:
-        userCreate = UserCreationForm()
-    return render(request, 'App/registro.html', {'form': userCreate})
+        form = UserCreationForm()
+    return render(request, 'App/registro.html', {'form': form})
+
 
 class CustomLogoutView(LogoutView):
     template_name = 'App/login.html'
